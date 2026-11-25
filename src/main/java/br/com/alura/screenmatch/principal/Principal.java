@@ -3,15 +3,12 @@ package br.com.alura.screenmatch.principal;
 import br.com.alura.screenmatch.model.DadosSerie;
 import br.com.alura.screenmatch.model.DadosTemporada;
 import br.com.alura.screenmatch.model.Episodio;
+import br.com.alura.screenmatch.model.Serie;
 import br.com.alura.screenmatch.service.ConsumoApi;
 import br.com.alura.screenmatch.service.ConverteDados;
 import ch.qos.logback.core.encoder.JsonEscapeUtil;
 
-import java.util.ArrayList;
-import java.util.DoubleSummaryStatistics;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Principal {
@@ -21,8 +18,9 @@ public class Principal {
     private ConverteDados conversor = new ConverteDados();
     private final String ENDERECO = "https://www.omdbapi.com/?t=";
     private final String API_KEY = "&apikey=6585022c";
-    private int  opcao;
+    private int opcao;
     private List<DadosSerie> dadosSerie = new ArrayList<>();
+
     public void exibeMenu() {
         do {
             var menu = """
@@ -31,7 +29,6 @@ public class Principal {
                     3 - Lista series Buscadas
                     0 - Sair                                 
                     """;
-
 
 
             System.out.println(menu);
@@ -45,16 +42,17 @@ public class Principal {
                 case 2:
                     buscarEpisodioPorSerie();
                     break;
-                case 3: ;
-                listaSeriesBuscadas();
-                   break;
+                case 3:
+                    ;
+                    listaSeriesBuscadas();
+                    break;
                 case 0:
                     System.out.println("Saindo...");
                     break;
                 default:
                     System.out.println("Opção inválida");
             }
-        }while (opcao != 0);
+        } while (opcao != 0);
     }
 
     private void buscarSerieWeb() {
@@ -70,10 +68,10 @@ public class Principal {
         DadosSerie dados = conversor.obterDados(json, DadosSerie.class);
         dados.toString();
 
-        return dados ;
+        return dados;
     }
 
-    private void buscarEpisodioPorSerie(){
+    private void buscarEpisodioPorSerie() {
         DadosSerie dadosSerie = getDadosSerie();
         List<DadosTemporada> temporadas = new ArrayList<>();
 
@@ -89,9 +87,19 @@ public class Principal {
         });
     }
 
-    private void listaSeriesBuscadas (){
+    private void listaSeriesBuscadas() {
+        List<Serie> series = new ArrayList<>();
+
+        series = dadosSerie.stream()
+                .map(d -> new Serie(d))
+                .collect(Collectors.toList());
+
+        series.stream()
+                .sorted(Comparator.comparing(Serie::getGenero))
+                .forEach(System.out::println);
+
         dadosSerie.forEach(System.out::println);
-        dadosSerie.toString();
+
 
     }
 
