@@ -10,7 +10,9 @@ public class ConsultaGemini {
 
         GenerateContentResponse resposta = client.models.generateContent(
                 "gemini-3.5-flash-lite",
-                "Traduza para o português o texto: " + texto,
+                "Traduza o texto para português do Brasil. "
+                        + "Retorne somente a tradução, sem opções, explicações ou comentários: "
+                        + texto,
                 null
         );
 

@@ -22,7 +22,6 @@ public class Serie {
         this.atores = dadosSerie.atores();
         this.poster = dadosSerie.Poster();
         this.sinopse = ConsultaGemini.obterTraducao(dadosSerie.Sinopse().trim());
-        System.out.println(dadosSerie.Sinopse());
     }
 
     public String getTitulo() {
@@ -90,7 +89,7 @@ public class Serie {
                 "\nAvaliação: " + avaliacao +
                 "\nAtores: " + atores +
                 "\nPôster: " + poster +
-                "\n\nSinopse: " + sinopse +
+                "\n\nSinopse Tarduzida: " + sinopse +
                 "\n===================================\n";
     }
 }
