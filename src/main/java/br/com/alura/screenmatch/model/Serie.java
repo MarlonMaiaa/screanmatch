@@ -1,7 +1,6 @@
 package br.com.alura.screenmatch.model;
 
-import br.com.alura.screenmatch.service.ConsultaChatGPT;
-import com.fasterxml.jackson.annotation.JsonAlias;
+import br.com.alura.screenmatch.service.ConsultaGemini;
 
 import java.util.Optional;
 
@@ -22,7 +21,8 @@ public class Serie {
         this.genero = Categoria.fromString(dadosSerie.genero().split(",")[0].trim());
         this.atores = dadosSerie.atores();
         this.poster = dadosSerie.Poster();
-        this.sinopse = ConsultaChatGPT.obterTraducao(dadosSerie.Sinopse()).trim();
+        this.sinopse = ConsultaGemini.obterTraducao(dadosSerie.Sinopse().trim());
+        System.out.println(dadosSerie.Sinopse());
     }
 
     public String getTitulo() {
